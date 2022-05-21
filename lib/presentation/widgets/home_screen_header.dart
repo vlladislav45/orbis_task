@@ -17,34 +17,52 @@ class HomeScreenHeader extends ConsumerWidget {
       ref.read(usersNotifierProvider.notifier).getUsers();
     });
     final double userProfileCardHeight = MediaQuery.of(context).size.height * 0.30;
-    return HookConsumer(
-      builder: (_, WidgetRef ref, child) {
-        final state = ref.watch<UsersState>(usersNotifierProvider);
+    return Column(
+      children: <Widget>[
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: const <Widget>[
+            Text('Classes', style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold)),
+            Text('icon'),
+          ],
+        ),
+        const SizedBox(height: 20.0),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: const <Widget>[
+            Text('Mentors', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+            Text('View all', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+          ],
+        ),
+        const SizedBox(height: 10.0),
+        HookConsumer(
+          builder: (_, WidgetRef ref, child) {
+            final state = ref.watch<UsersState>(usersNotifierProvider);
 
-        if(state is GetUsersState) {
-          List<User> users = state.users;
-          return SizedBox(
-            height: userProfileCardHeight,
-            child: ListView.builder(
-                shrinkWrap: true,
-                scrollDirection: Axis.horizontal,
-                itemCount: users.length,
-                physics: const BouncingScrollPhysics(),
-                itemBuilder: (context, index) {
-                  return HomePageProfileCard(user: users[index]);
-                }),
-          );
-        }
-        if (state is UsersLoadingState) {
-          return const Loading(alignment: Alignment.center);
-        }
-        if (state is InitialUsersState) {
-          return const Loading(alignment: Alignment.center);
-        }
-        return Container();
-      },
+            if (state is GetUsersState) {
+              List<User> users = state.users;
+              return SizedBox(
+                height: userProfileCardHeight,
+                child: ListView.builder(
+                    shrinkWrap: true,
+                    scrollDirection: Axis.horizontal,
+                    itemCount: users.length,
+                    physics: const BouncingScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      return HomePageProfileCard(user: users[index]);
+                    }),
+              );
+            }
+            if (state is UsersLoadingState) {
+              return const Loading(alignment: Alignment.center);
+            }
+            if (state is InitialUsersState) {
+              return const Loading(alignment: Alignment.center);
+            }
+            return Container();
+          },
+        )
+      ],
     );
   }
 }
-
-

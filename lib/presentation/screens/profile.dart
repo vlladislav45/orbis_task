@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:orbis_task/presentation/widgets/home_page_profile_card.dart';
 import 'package:orbis_task/presentation/widgets/loading.dart';
+import 'package:orbis_task/presentation/widgets/profile_header.dart';
+import 'package:orbis_task/presentation/widgets/profile_specifications.dart';
 import 'package:orbis_task/service/user/user_provider.dart';
 import 'package:orbis_task/service/user/user_state.dart';
 
@@ -27,7 +28,11 @@ class ProfilePage extends ConsumerWidget {
               if (state is SingleUser) {
                 return Column(
                   children: <Widget>[
-                    HomePageProfileCard(user: state.user),
+                    ProfileHeader(user: state.user),
+
+                    const SizedBox(height: 20),
+
+                    ProfileSpecifications(),
                   ],
                 );
               } else if (state is SingleUserLoadingState) {
