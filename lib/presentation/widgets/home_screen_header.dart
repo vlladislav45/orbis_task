@@ -23,7 +23,7 @@ class HomeScreenHeader extends ConsumerWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: const <Widget>[
             Text('Classes', style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold)),
-            Text('icon'),
+            Text('Logo'),
           ],
         ),
         const SizedBox(height: 20.0),

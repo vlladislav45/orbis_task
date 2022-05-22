@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:orbis_task/model/user.dart';
+import 'package:orbis_task/model/view/statistic.dart' as StatisticModel;
+import 'package:intl/intl.dart';
+
+final currencyFormat = NumberFormat("#,##0", "en_US");
 
 class ProfileHeader extends StatelessWidget {
   final User user;
@@ -16,34 +21,36 @@ class ProfileHeader extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Container(
-                width: 110,
-                padding: EdgeInsets.only(top: 10, left: 10),
+                padding: const EdgeInsets.only(top: 10, right: 10),
                 child: Stack(
                   children: [
-                  Container(
-                        width: 100,
-                        height: 100,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          image: DecorationImage(
-                            fit: BoxFit.fill,
-                            image: NetworkImage(user.avatarUrl),
-                          ),
+                    Container(
+                      width: 100,
+                      height: 100,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        image: DecorationImage(
+                          fit: BoxFit.fill,
+                          image: NetworkImage(user.avatarUrl),
                         ),
                       ),
+                    ),
                     Positioned(
-                      right: 0,
+                      right: -5,
                       top: -5,
-                      child: Container(
-                        padding: EdgeInsets.all(10),
-                        decoration: const BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Colors.blue,
-                        ),
-                        child: const Center(
-                          child: Icon(
-                            Icons.check,
-                            color: Colors.white,
+                      child: ClipPath(
+                        clipper: StarClipper(6),
+                        child: Container(
+                          padding: EdgeInsets.all(10),
+                          decoration: const BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Colors.blue,
+                          ),
+                          child: const Center(
+                            child: Icon(
+                              Icons.check,
+                              color: Colors.white,
+                            ),
                           ),
                         ),
                       ),
@@ -121,54 +128,62 @@ class ProfileHeader extends StatelessWidget {
             ],
           ),
           SizedBox(height: 20),
-          Statistics(),
+          _Statistics(),
         ],
       ),
     );
   }
 }
 
-class Statistics extends StatelessWidget {
-  const Statistics({Key? key}) : super(key: key);
+class _Statistics extends StatelessWidget {
+  final List<StatisticModel.Statistic> _statistics = [
+    StatisticModel.Statistic(index: 0, title: 'Students', count: 35789),
+    StatisticModel.Statistic(index: 0, title: 'Students', count: 35789),
+    StatisticModel.Statistic(index: 0, title: 'Students', count: 35789),
+  ];
+
+  _Statistics({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return IntrinsicHeight(
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Statistic(),
-          SizedBox(
-            height: 20,
-            child: VerticalDivider(
-              color: Colors.grey[600],
-            ),
-          ),
-          Statistic(),
-          SizedBox(
-            height: 20,
-            child: VerticalDivider(
-              color: Colors.grey[600],
-            ),
-          ),
-          Statistic(),
-        ],
-      ),
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: List.generate(
+              _statistics.length,
+              (index) => Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                    _Statistic(
+                      title: _statistics[index].title,
+                      count: _statistics[index].count,
+                    ),
+                    index != _statistics.length - 1
+                        ? Container(
+                            margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.10),
+                            height: 20,
+                            child: VerticalDivider(
+                              color: Colors.grey[600],
+                            ),
+                          )
+                        : Container(),
+                  ]))),
     );
   }
 }
 
-class Statistic extends StatelessWidget {
-  const Statistic({Key? key}) : super(key: key);
+class _Statistic extends StatelessWidget {
+  final String title;
+  final int count;
+
+  const _Statistic({Key? key, required this.title, required this.count}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Text('Students', style: Theme.of(context).textTheme.bodyText1?.copyWith(color: Colors.grey[600])),
-        Text('35,789', style: Theme.of(context).textTheme.bodyText2?.copyWith(fontSize: 22, fontWeight: FontWeight.bold)),
+        Text(title, style: Theme.of(context).textTheme.bodyText1?.copyWith(color: Colors.grey[600])),
+        Text(currencyFormat.format(count), style: Theme.of(context).textTheme.bodyText2?.copyWith(fontSize: 22, fontWeight: FontWeight.bold)),
       ],
     );
   }

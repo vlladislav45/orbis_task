@@ -23,6 +23,7 @@ class _ProfileSpecificationsState extends State<ProfileSpecifications> {
       title: 'Discussion',
     ),
   ];
+  int _selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +39,15 @@ class _ProfileSpecificationsState extends State<ProfileSpecifications> {
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: List.generate(_specifications.length, (index) => SpecificationNavTitle(title: _specifications[index].title)),
+              children: List.generate(
+                  _specifications.length,
+                  (index) => GestureDetector(
+                      onTap: () => setState(() => _selectedIndex = index),
+                      child: SpecificationNavTitle(
+                        title: _specifications[index].title,
+                        color: _selectedIndex == index ? Colors.white : Colors.transparent,
+                        fontWeight: _selectedIndex == index ? FontWeight.bold : FontWeight.normal,
+                      ))),
             ),
           ),
           SpecificationCard(),
@@ -50,24 +59,26 @@ class _ProfileSpecificationsState extends State<ProfileSpecifications> {
 
 class SpecificationNavTitle extends StatelessWidget {
   final String title;
+  final Color color;
+  final FontWeight fontWeight;
 
-  const SpecificationNavTitle({Key? key, required this.title}) : super(key: key);
+  const SpecificationNavTitle({Key? key, required this.title, required this.color, required this.fontWeight}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: color,
         borderRadius: BorderRadius.circular(15),
       ),
       child: Container(
         alignment: Alignment.center,
         width: MediaQuery.of(context).size.width * 0.25,
-        color: Colors.white,
+        color: color,
         child: Text(title,
             style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                  fontWeight: FontWeight.w600,
+                  fontWeight: fontWeight,
                 ),
             textAlign: TextAlign.center),
       ),
@@ -81,69 +92,89 @@ class SpecificationCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(15),
-      padding: EdgeInsets.all(20),
+      margin: const EdgeInsets.all(15),
+      padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         color: Colors.pinkAccent,
         borderRadius: BorderRadius.circular(20),
       ),
-      child: Column(
+      child: Stack(
         children: <Widget>[
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          Column(
             children: <Widget>[
-              Column(
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  Text('Become a UX Designer',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600,
-                      )),
-                  Text('Learn the skills & get the Job',
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.grey[700],
-                      )),
+                  Column(
+                    children: <Widget>[
+                      Text('Become a UX Designer',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w600,
+                          )),
+                      Text('Learn the skills & get the Job',
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: Colors.grey[700],
+                          )),
+                    ],
+                  ),
+                  Container(
+                    child: Icon(Icons.heart_broken, size: 20),
+                  ),
                 ],
               ),
+              SizedBox(height: 10),
               Container(
-                child: Icon(Icons.heart_broken, size: 20),
+                  alignment: Alignment.centerLeft,
+                  child: Text('/ / / / /', style: Theme.of(context).textTheme.bodyText1?.copyWith(fontWeight: FontWeight.w600))),
+              SizedBox(height: 20),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Row(
+                    children: <Widget>[
+                      Text('4.85',
+                          style: TextStyle(
+                            fontSize: 34,
+                            fontWeight: FontWeight.w600,
+                          )),
+                      Container(
+                        child: Icon(Icons.star_sharp, size: 14),
+                      ),
+                      Text('ratings',
+                          style: TextStyle(
+                            fontSize: 14,
+                          )),
+                    ],
+                  ),
+                  Text('48h',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                      ))
+                ],
               ),
             ],
           ),
-          SizedBox(height: 10),
-          Container(
-              alignment: Alignment.centerLeft,
-              child: Text('/ / / / /', style: Theme.of(context).textTheme.bodyText1?.copyWith(fontWeight: FontWeight.w600))),
-          SizedBox(height: 20),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Row(
-                children: <Widget>[
-                  Text('4.85',
-                      style: TextStyle(
-                        fontSize: 34,
-                        fontWeight: FontWeight.w600,
-                      )),
-                  Container(
-                    child: Icon(Icons.star_sharp, size: 14),
+          Positioned(
+              top: 5,
+              right: -10,
+              child: Container(
+                decoration: const BoxDecoration(
+                  color: Colors.black,
+                  shape: BoxShape.circle,
+                ),
+                child: Container(
+                  width: 5,
+                  height: MediaQuery.of(context).size.height * 0.05,
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
                   ),
-                  Text('ratings',
-                      style: TextStyle(
-                        fontSize: 14,
-                      )),
-                ],
-              ),
-              Text('48h',
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
-                  ))
-            ],
-          )
+                ),
+              ))
         ],
       ),
     );
