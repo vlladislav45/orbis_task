@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:orbis_task/model/user.dart';
 import 'package:orbis_task/model/view/statistic.dart' as StatisticModel;
 import 'package:intl/intl.dart';
+import 'package:orbis_task/utils/star_clipper.dart';
 
 final currencyFormat = NumberFormat("#,##0", "en_US");
 
-class ProfileHeader extends StatelessWidget {
+class ProfileHeader extends ConsumerWidget {
   final User user;
 
   const ProfileHeader({Key? key, required this.user}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Container(
       child: Column(
         children: <Widget>[
@@ -20,11 +22,13 @@ class ProfileHeader extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Container(
-                padding: const EdgeInsets.only(top: 10, right: 10),
-                child: Stack(
-                  children: [
-                    Container(
+              Stack(
+                children: [
+                  Container(
+                    width: 110,
+                    height: 110,
+                    padding: const EdgeInsets.only(top: 10, right: 10),
+                    child: Container(
                       width: 100,
                       height: 100,
                       decoration: BoxDecoration(
@@ -35,28 +39,28 @@ class ProfileHeader extends StatelessWidget {
                         ),
                       ),
                     ),
-                    Positioned(
-                      right: -5,
-                      top: -5,
-                      child: ClipPath(
-                        clipper: StarClipper(14),
-                        child: Container(
-                          padding: const EdgeInsets.all(10),
-                          decoration: const BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Colors.blue,
-                          ),
-                          child: const Center(
-                            child: Icon(
-                              Icons.check,
-                              color: Colors.white,
-                            ),
+                  ),
+                  Positioned(
+                    right: 0,
+                    top: 0,
+                    child: ClipPath(
+                      clipper: StarClipper(14),
+                      child: Container(
+                        padding: EdgeInsets.all(10),
+                        decoration: const BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.blue,
+                        ),
+                        child: const Center(
+                          child: Icon(
+                            Icons.check,
+                            color: Colors.white,
                           ),
                         ),
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
               IconButton(
                   onPressed: () => {
@@ -66,7 +70,7 @@ class ProfileHeader extends StatelessWidget {
                   color: Colors.black),
             ],
           ),
-          const SizedBox(height: 20),
+          SizedBox(height: 20),
           Column(
             mainAxisSize: MainAxisSize.max,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -74,7 +78,7 @@ class ProfileHeader extends StatelessWidget {
               Container(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  'John Doe',
+                  user.login,
                   style: Theme.of(context).textTheme.headline2?.copyWith(color: Colors.black),
                 ),
               ),
@@ -84,7 +88,7 @@ class ProfileHeader extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 20),
+          SizedBox(height: 20),
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -93,12 +97,12 @@ class ProfileHeader extends StatelessWidget {
                 width: MediaQuery.of(context).size.width * 0.6,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.all(15),
+                    padding: EdgeInsets.all(15),
                     primary: Colors.blue,
                     onPrimary: Colors.white,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(18.0),
-                        side: const BorderSide(
+                        side: BorderSide(
                           color: Colors.blue,
                           width: 2.0,
                         )),
@@ -122,12 +126,12 @@ class ProfileHeader extends StatelessWidget {
                           width: 1.0,
                         )),
                   ),
-                  child: const  Text('Follow'),
+                  child: Text('Follow'),
                 ),
               )
             ],
           ),
-          const SizedBox(height: 20),
+          SizedBox(height: 20),
           _Statistics(),
         ],
       ),
@@ -136,6 +140,7 @@ class ProfileHeader extends StatelessWidget {
 }
 
 class _Statistics extends StatelessWidget {
+  // TODO: Add real statistics data in that case of GitHub OpenAPI
   final List<StatisticModel.Statistic> _statistics = [
     StatisticModel.Statistic(index: 0, title: 'Students', count: 35789),
     StatisticModel.Statistic(index: 0, title: 'Students', count: 35789),
