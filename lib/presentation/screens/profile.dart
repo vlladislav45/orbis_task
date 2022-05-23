@@ -4,6 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:orbis_task/presentation/widgets/loading.dart';
 import 'package:orbis_task/presentation/widgets/profile_header.dart';
 import 'package:orbis_task/presentation/widgets/profile_specifications.dart';
+import 'package:orbis_task/service/projects/projects_provider.dart';
 import 'package:orbis_task/service/user/user_provider.dart';
 import 'package:orbis_task/service/user/user_state.dart';
 

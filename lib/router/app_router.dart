@@ -2,18 +2,22 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:orbis_task/api/project_api.dart';
 import 'package:orbis_task/api/user_api.dart';
 import 'package:orbis_task/model/args/profile_argument.dart';
 import 'package:orbis_task/presentation/screens/home.dart';
 import 'package:orbis_task/presentation/screens/profile.dart';
 
 class AppRouter {
-  late UserAPI userAPI;
+  late UserAPI _userAPI;
+  late ProjectAPI _projectAPI;
 
   AppRouter() {
-    userAPI = UserAPI();
+    _userAPI = UserAPI();
+    _projectAPI = ProjectAPI();
 
-    GetIt.I.registerFactory<UserAPI>(() => userAPI);
+    GetIt.I.registerFactory<UserAPI>(() => _userAPI);
+    GetIt.I.registerFactory<ProjectAPI>(() => _projectAPI);
   }
 
 
