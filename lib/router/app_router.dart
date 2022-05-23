@@ -23,6 +23,7 @@ class AppRouter {
         return MaterialPageRoute(settings: const RouteSettings(name: '/'), builder: (_) => HomePage());
       }
       case '/profile': {
+        // for test purposes
         ProfileArgument argument = settings.arguments != null ? settings.arguments as ProfileArgument : ProfileArgument('mojombo');
         return MaterialPageRoute(settings: const RouteSettings(name: '/profile'), builder: (_) => ProfilePage(username: argument.username));
       }

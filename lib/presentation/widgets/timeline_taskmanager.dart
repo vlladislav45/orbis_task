@@ -157,7 +157,7 @@ class _Task extends StatelessWidget {
                 ],
               ),
               Container(
-                child: Icon(Icons.heart_broken, size: 20),
+                child: Icon(Icons.favorite_outline, size: 20),
               ),
             ],
           ),

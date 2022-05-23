@@ -39,9 +39,9 @@ class ProfileHeader extends StatelessWidget {
                       right: -5,
                       top: -5,
                       child: ClipPath(
-                        clipper: StarClipper(6),
+                        clipper: StarClipper(14),
                         child: Container(
-                          padding: EdgeInsets.all(10),
+                          padding: const EdgeInsets.all(10),
                           decoration: const BoxDecoration(
                             shape: BoxShape.circle,
                             color: Colors.blue,
@@ -66,7 +66,7 @@ class ProfileHeader extends StatelessWidget {
                   color: Colors.black),
             ],
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           Column(
             mainAxisSize: MainAxisSize.max,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -84,7 +84,7 @@ class ProfileHeader extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -93,12 +93,12 @@ class ProfileHeader extends StatelessWidget {
                 width: MediaQuery.of(context).size.width * 0.6,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    padding: EdgeInsets.all(15),
+                    padding: const EdgeInsets.all(15),
                     primary: Colors.blue,
                     onPrimary: Colors.white,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(18.0),
-                        side: BorderSide(
+                        side: const BorderSide(
                           color: Colors.blue,
                           width: 2.0,
                         )),
@@ -122,12 +122,12 @@ class ProfileHeader extends StatelessWidget {
                           width: 1.0,
                         )),
                   ),
-                  child: Text('Follow'),
+                  child: const  Text('Follow'),
                 ),
               )
             ],
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           _Statistics(),
         ],
       ),
