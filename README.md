@@ -1,16 +1,28 @@
 # orbis_task
 
-A new Flutter project.
+Examination project.
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## What should be included in the next version?
+* Enrich the project with more data from the GitHub OpenAPI for each user with his projects. I 
+started to do it but the api is not stable, many times i'm not getting
+any data, maybe because they are restrictions in some cases to don't go many
+requests from same devices for testing purpose, idk.
+* Add background card on each Specification card to be exactly like the design.
+It can be done with a simple card with a background that is wrapped with Stack
+* When the data is populated it's just be changed with the real one. Also in the timeline manager
+it would be good if it's added more detail data which will centralized the cards
+according to it. For example:
+```
+{
+    "id": "1",
+    "title": "Card 1",
+    "description": "Card 1 description",
+    "start": "2020-01-01",
+    "end": "2020-01-02",
+    "type": "specification",
+    "background": {
+        "color": "red",
+        "image": "https://picsum.photos/200/300"
+    }
+}
+```
